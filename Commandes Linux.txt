@@ -1,0 +1,292 @@
+******************************** COMMANDES: *************************************************************************
+
+date				Donne la date/heure
+ls ([file dir])			Donne une lliste des fichiers du fichier présent ou fichier cité
+		-a		Tous les fichiers et dossiers cachés
+		-F		Type d'élément
+		-l		détaillée
+		-h : afficher la taille en Ko, Mo, Go…
+		-t : trier par date de dernière modification
+		-i afficher les numéros d'inode
+
+***************************** LA STRUCTURE DES DOSSIERS ET FICHIERS ***********************************************
+
+pwd : Print current directory
+
+wich [commande] : Emplacement commande
+
+cd [dir] : changer de dossier
+
+du: taille occupée par les dossiers
+	-h : la taille pour les humains
+	-a : afficher la taille des dossiers ET des fichiers
+	-s : avoir juste le grand total
+	
+******************************** MANIPULER LES FICHIERS ************************************************************
+
+cat : afficher tout le fichier
+	-n	numéro de ligne
+
+less : afficher le fichier page par page
+	h affiche l'aide dans less
+
+head : afficher le début du fichier
+	-n  [] nombre de lignes désirées
+
+tail : afficher la fin du fichier
+	-n  [] nombre de lignes désirées
+	-f follow (dynamique)
+	-s [] recharger toutes les x secondes
+
+touch [nom_du_fichier] : créer un fichier
+
+mkdir [namedir] : créer un dossier
+	-p créer des fichiers intermédiaires (animaux/vertebres/chat)
+
+cp [fichier à copier] (/emplacement)(nom_du_fichier) : copier un fichier
+	-R :Copier des dossiers
+
+* : joker *[x] ==> tout ce qui se termine par x
+	   [x]* ==> tou ce qui commence par x
+		on peut l'utiliser dans cp
+
+mv : déplacer un fichier/renommer
+
+rm : supprimer un fichier
+	-i : demander confirmation
+	-f : forcer la suppression, quoi qu'il arrive
+	-v : dis-moi ce que tu fais, petit cachotier
+	-r : supprimer un dossier et son contenu
+	JAMAIS: rm -rf /*
+
+ln [fichier1] [fichier2] : crée un lien physique entre fichier1 et fichier2, crée fichier 2
+	-s : crée lien physique (raccourci)
+
+******************************** LES UTILISATEURS ET LES DROITS ****************************************************
+
+sudo : devenir root un instant
+	su : le rester
+
+adduser : ajouter un utilisateur
+
+passwd [user] : changer le mot de passe
+
+deluser : supprimer un compte
+	--remove-home
+
+addgroup : créer un groupe
+
+usermod [user] : modifier un utilisateur
+	-l : renomme l'utilisateur 
+	-g : change de groupe.
+	-G : défini appartenance à plusieurs groupes
+	-aG : ajoute à un ou des groupes en plus
+
+delgroup [group] : supprimer un groupe
+
+chown [user] [file]: changer le propriétaire d'un fichier
+      [user]:[group] [file] propriétaire + groupe
+	-R : affecter récursivement les sous-dossiers
+
+
+chgrp [grp] [file]: changer le groupe propriétaire d'un fichier
+
+chmod : modifier les droits d'accès
+	-R : récursivité
+
+******************************* NANO, L'ÉDITEUR DE TEXTE DU DÉBUTANT ***********************************************
+
+nano : ouvre nano
+	Ctrl + G : afficher l'aide ;
+	Ctrl + K : couper la ligne de texte (et la mettre dans le presse-papier) ;
+	Ctrl + U : coller la ligne de texte que vous venez de couper ;
+	Ctrl + C : afficher à quel endroit du fichier votre curseur est positionné (numéro de ligne…) ;
+	Ctrl + W : rechercher dans le fichier ;
+	Ctrl + O : enregistrer le fichier (écrire) ;
+	Ctrl + X : quitter Nano
+	-m : autorise l'utilisation de la souris 
+	-i : indentation automatique.
+	-A : active le retour intelligent au début de la ligne.
+
+************************************ INSTALLER DES PROGRAMMES AVEC APT-GET *****************************************
+
+apt-get update : mettre à jour le cache des paquets
+
+apt-cache search [] : rechercher un paquet
+
+apt-cache show [nomdupaquet] : show nomdupaquet
+
+apt-get install [x y z] : installer un paquet
+
+apt-get autoremove [] : supprimer un paquet
+
+apt-get upgrade : mettre à jour tous les paquets (utiliser après apt-get update)
+
+****************************************** RTFM : LISEZ LE MANUEL ! ************************************************
+
+man [] : afficher le manuel d'une commande
+
+whatis [] : version allégée de man
+
+apropos : trouver une commande
+
+(s)locate [] : une recherche rapide
+
+sudo updatedb : mettre à jour la base de données du DD
+
+******************************************* RECHERCHER DES FICHIERS ************************************************
+
+find [directory] : une recherche approfondie
+	-name "x" : cherche un nom. Placer après le dossier.
+Option à ajouter à la suite:
+	-size +[x]M ou k ou G
+	-atime -[nombre de jours]
+	-type d : directories only
+	-type f : files only
+	-printf "[...]"
+	-exec [commande] : executer une comamande sur chacun des résultats
+	-ok : exec avec configuration
+
+find   -name "*.jpg" -exec chmod 600 {} \; : execute chmod sur chaque fichier {} sera remplacé par chaque fichier
+
+********************************************* EXTRAIRE, TRIER ET FILTRER DES DONNÉES ********************************
+
+grep [option] [texte recherché] [fichier] : guillemets si espace dans le texte
+	-i : ne pas tenir compte de la casse
+	-n : connaître les numéros des lignes
+	-v : inverser la recherche : ignorer un mot
+	-E : expressions reégulières
+
+grep -r "Site du Zéro" code/ : recherchera la chaîne «Site du Zéro» dans tous les fichiers du répertoire.
+											+ sous dossiers
+
+sort [option] [nom du fichier] [nom du fichier créé si -o] : trier les lignes
+	-o : écrire le résultat dans un fichier
+	-r : trier en ordre inverse
+	-R : trier aléatoirement
+	-n : trier des nombres
+	
+wc [] : compter le nombre de lignes, mots, octets, dans cet ordre
+	-l : lignes
+	-w : words
+	-c : octets
+	-m nombre caractères
+
+uniq [option] [file] [new file] : supprimer les doublons
+	-c : compter le nombre d'occurrences
+	-d : afficher uniquement les lignes présentes en double
+	
+cut [option] [nomfichier] : couper une partie du fichier
+cut -c 2-5 noms.txt : conserve les caractères 2 à 5 de chaque ligne du fichier
+	-d : indique quel est le délimiteur dans le fichier
+	-f : indique le numéro du ou des champs à couper.
+cut -d , -f 1 notes.csv
+cut -d , -f 1,3 notes.csv
+
+********************************************** LES FLUX DE REDIRECTION *********************************************
+
+> et >> : rediriger le résultat dans un fichier
+
+2>, 2>> et 2>&1 : rediriger les erreurs
+
+< et << : lire depuis un fichier ou le clavier
+
+| : chaîner les commandes
+
+sudo grep log -Ir /var/log  | cut -d : -f 1  | sort | uniq
+
+1.Elle liste tous les fichiers contenant le mot « log » dans /var/log (-I permettant d'exclure les fichiers binaires).
+2.Elle extrait de ce résultat uniquement les noms des fichiers.
+3.Elle trie ces noms de fichiers.
+4.Elle supprime les doublons.
+
+du : donne la taille de chacun des répoertoire courants
+
+******************************************* SURVEILLER L'ACTIVITÉ DU SYSTÈME ****************************************
+
+w : users and details
+
+uptime: time + charge
+
+tload : graphe utilisation processeur
+
+who : liste des connectés
+
+ps : lister les processus
+	-ef : lister tous les processus
+	-ejH : afficher les processus en arbre
+	-u UTILISATEUR : lister les processus lancés par un utilisateur
+	
+
+top : lister les processus dynamique
+
+Ctrl + C : arrêter un processus lancé en console
+
+kill : tuer un processus
+	-9 : hardcore kill
+
+killall : tuer plusieurs processus
+
+halt & reboot : arrêter et redémarrer l'ordinateur (avec sudo)
+
+***************************************** EXÉCUTER DES PROGRAMMES EN ARRIÈRE-PLAN **************************************
+
+
+[commande] & : lancer un processus en arrière-plan
+
+nohup : détacher le processus de la console
+
+Ctrl + Z, jobs, bg & fg : pause process/afficher les process/releguer en backgroung(après ctrl Z/ pareil en foreground
+
+screen : plusieurs consoles en une
+	Ctrl + a puis S : découper screen en plusieurs parties (split)
+
+******************************************** EXÃ‰CUTER UN PROGRAMME Ã€ UNE HEURE DIFFÃ‰RÃ‰E
+
+date
+
+at : exÃ©cuter une/des commande(s) plus tard
+	-ctrl + D pour fermer
+ 
+atq : liste des commandes planifiÃ©es
+
+atrm : supprimer un job planifiÃ©
+
+sleep : dormir un peu ajouter temps en secondes
+
+; : symbole qui permet de mettre plusieurs commandes sur une mÃªme ligne
+
+&& : mÃªme chose que " ; " mais exÃ©cute les commandes suivante seulement si les prÃ©cÃ©dentes ne renvoient pas d'erreurs.
+
+crontab : exÃ©cuter une commande rÃ©guliÃ¨rement
+
+
+******************************************* ARCHIVER ET COMPRESSER *************************************************************
+
+tarz
+
+
+
+
+
+
+
+
+*************** RACCOURCIS ************************************************************************************************
+
+Ctrl + R : 			Rechercher une commande précédemment utilisée
+
+Ctrl + A : ramène le curseur au début de la commande
+
+Ctrl + E : ramène le curseur à la fin de la ligne de commandes.
+
+Ctrl + U : supprime tout ce qui se trouve à gauche du curseur.
+
+Ctrl + K : supprime tout ce qui se trouve à droite du curseur. 
+
+Ctrl + W : supprime le premier mot situé à gauche du curseur.
+
+Ctrl + Y : si vous avez supprimé du texte avec une des commandes, Ctrl + Y « collera » le collera.
+
+
+
